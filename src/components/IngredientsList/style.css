@@ -41,3 +41,8 @@ ul.ingredients-list > li {
 	cursor: pointer;
   }
   
+
+.remove-button {
+	margin-inline-start: 10px;
+margin-bottom: -3px;
+}

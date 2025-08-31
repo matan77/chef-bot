@@ -12,17 +12,16 @@ const Main = () => {
   ]);
   const [recipe, setRecipe] = useState("");
 
-  const pinnedRef = useRef(true); 
+  const pinnedRef = useRef(true);
 
   const computePinned = () => {
     const doc = document.documentElement;
     const isAtBottom =
-      window.innerHeight + window.scrollY >= doc.scrollHeight - 8; 
+      window.innerHeight + window.scrollY >= doc.scrollHeight - 8;
     pinnedRef.current = isAtBottom;
   };
 
   useEffect(() => {
-
     computePinned();
     window.addEventListener("scroll", computePinned, { passive: true });
     window.addEventListener("resize", computePinned);
@@ -38,7 +37,6 @@ const Main = () => {
   };
 
   const scrollWindowToBottom = () => {
-
     requestAnimationFrame(() => {
       window.scrollTo({
         top: document.documentElement.scrollHeight,
@@ -76,13 +74,20 @@ const Main = () => {
         />
         <button>Add ingredient</button>
       </form>
-
-      {ingredients.length > 0 && (
-        <IngredientsList
-          ingredients={ingredients}
-          toggleRecipeShown={getRecipe}
-        />
-      )}
+      <section>
+        <h2>Ingredients on hand:</h2>
+        {ingredients.length > 0 && (
+          <IngredientsList
+            ingredients={ingredients}
+            toggleRecipeShown={getRecipe}
+            removeIngredient={(remove) => {
+              setIngredients(
+                ingredients.filter((ingredient) => remove !== ingredient)
+              );
+            }}
+          />
+        )}
+      </section>
 
       {recipe && <Recipe recipe={recipe} />}
     </main>
