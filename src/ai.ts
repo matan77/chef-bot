@@ -1,5 +1,11 @@
-// for HF_ACCESS_TOKEN
-import { HfInference } from "@huggingface/inference";
+import OpenAI from "openai";
+
+const api = new OpenAI({
+  baseURL: import.meta.env.VITE_VLLM_SERVER,
+  apiKey:"",
+  dangerouslyAllowBrowser:true,
+  timeout: 500000
+});
 
 const SYSTEM_PROMPT = `
 You are an assistant that receives a list of ingredients that a user has and suggests a recipe,
@@ -10,14 +16,11 @@ Format your response in markdown to make it easier to render to a web page
 `;
 
 
-
-const hf = new HfInference(import.meta.env.VITE_HF_ACCESS_TOKEN);
-
-export const getRecipeFromMistral = async (ingredientsArr: string[]) => {
+export const getRecipeStreamFromLLaMA = async (ingredientsArr: string[]) => {
   const ingredientsString = ingredientsArr.join(", ");
   try {
-    const response = await hf.chatCompletion({
-      model: "mistralai/Mixtral-8x7B-Instruct-v0.1",
+    const response = await api.chat.completions.create({
+      model: "/models/Llama-3-8B-Instruct",
       messages: [
         { role: "system", content: SYSTEM_PROMPT },
         {
@@ -25,10 +28,12 @@ export const getRecipeFromMistral = async (ingredientsArr: string[]) => {
           content: `I have ${ingredientsString}. Please give me a recipe you'd recommend I make!`,
         },
       ],
-      max_tokens: 1024,
+      max_completion_tokens: 1024,
+      stream: true
     });
-    return response.choices[0].message.content;
+    return response;
   } catch (error: unknown) {
     if (error instanceof Error) console.error(error.message);
+    else console.error(error);
   }
 };
