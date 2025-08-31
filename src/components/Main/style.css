@@ -35,3 +35,6 @@ main {
   margin-right: 5px;
 }
 
+.add-ingredient-form > button:hover {
+  background-color: #41413f; 
+}

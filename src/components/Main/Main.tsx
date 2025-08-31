@@ -11,6 +11,7 @@ const Main = () => {
     "Tomatoes",
   ]);
   const [recipe, setRecipe] = useState("");
+  const [isGenerate, setIsGenerate] = useState(false);
 
   const pinnedRef = useRef(true);
 
@@ -46,6 +47,7 @@ const Main = () => {
   };
 
   const getRecipe = async () => {
+    setIsGenerate(true);
     const response = await getRecipeStreamFromLLaMA(ingredients);
     setRecipe("");
 
@@ -60,6 +62,7 @@ const Main = () => {
           scrollWindowToBottom();
         }
       }
+      setIsGenerate(false);
     }
   };
 
@@ -85,6 +88,7 @@ const Main = () => {
                 ingredients.filter((ingredient) => remove !== ingredient)
               );
             }}
+          isGenerate={isGenerate}
           />
         )}
       </section>

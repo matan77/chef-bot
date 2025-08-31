@@ -5,10 +5,12 @@ const IngredientsList = ({
   ingredients,
   toggleRecipeShown,
   removeIngredient,
+  isGenerate
 }: {
   ingredients: string[];
   toggleRecipeShown: () => void;
   removeIngredient: (ingredient: string) => void;
+  isGenerate: boolean;
 }) => {
   return (
     <>
@@ -30,7 +32,7 @@ const IngredientsList = ({
             <h3>Ready for a recipe?</h3>
             <p>Generate a recipe from your list of ingredients.</p>
           </div>
-          <button onClick={toggleRecipeShown}>Get a recipe</button>
+          <button disabled={isGenerate} onClick={toggleRecipeShown}>Get a recipe</button>
         </div>
       )}
     </>
