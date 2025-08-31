@@ -12,7 +12,6 @@ const Main = () => {
   ]);
   const [recipe, setRecipe] = useState("");
 
-  const [pinned, setPinned] = useState(true);
   const pinnedRef = useRef(true); 
 
   const computePinned = () => {
@@ -20,7 +19,6 @@ const Main = () => {
     const isAtBottom =
       window.innerHeight + window.scrollY >= doc.scrollHeight - 8; 
     pinnedRef.current = isAtBottom;
-    setPinned(isAtBottom);
   };
 
   useEffect(() => {
