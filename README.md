@@ -10,8 +10,6 @@ import OpenAI from "openai";
 const api = new OpenAI({
   baseURL: import.meta.env.VITE_VLLM_SERVER,
   apiKey:"",
-  dangerouslyAllowBrowser:true,
-  timeout: 500000
 });
 
 const SYSTEM_PROMPT = `
