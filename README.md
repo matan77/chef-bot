@@ -67,7 +67,3 @@ export const getRecipeStreamFromLLaMA = async (ingredientsArr: string[]) => {
     }
   };
 ```
-
-```ts
-
-```
